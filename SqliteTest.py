@@ -1,9 +1,14 @@
 import sqlite3
 import os
+import sys
 from datetime import datetime
 from random import randint
 
 if __name__ == "__main__":
+    insert_count = 1e5
+    if len(sys.argv) > 1:
+        insert_count = int(sys.argv[1])
+
     db_filename = "data/sqlite_test.db"
     schema_filename = "data/sqlite3_test.sql"
 
@@ -22,7 +27,7 @@ if __name__ == "__main__":
         inserts = 0
         conflicts = 0
         upper = 256 ** 3
-        while inserts < 1e5:
+        while inserts < insert_count:
             sql = 'insert into registration select \"{0}\",\"REG\",\"{1}\"'.format('{:06X}'.format(randint(1, upper)),
                                                                                    str(datetime.now()))
             try:
